@@ -1,0 +1,35 @@
+public class ReprodutorLista {
+    private ListaReproducao listaReproducao;
+    private String status;
+    private Clip clip;
+
+    public ReprodutorLista(ListaReproducao listaReproducao) {
+        this.listaReproducao = listaReproducao;
+        this.status = "parado";
+        this.clip = null; 
+    }
+
+    public void play() {
+        
+        System.out.println("Tocando música...");
+        status = "tocando";
+    }
+
+    public void pause() {
+        
+        System.out.println("Música pausada.");
+        status = "pausado";
+    }
+
+    public void restartLista() {
+        
+        System.out.println("Lista reiniciada.");
+        status = "reiniciado";
+    }
+
+    public void stop() {
+        
+        System.out.println();
+        status = 
+    }
+}
