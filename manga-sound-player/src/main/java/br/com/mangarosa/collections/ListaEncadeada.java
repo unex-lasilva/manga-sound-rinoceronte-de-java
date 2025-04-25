@@ -24,14 +24,32 @@ package br.com.mangarosa.collections;
  * @version 1.0
  */
 public class ListaEncadeada {
-
+    private No cabeca;
+    private int tamanho;
+    
     /**
      * Adiciona um elemento ao final da lista.
      *
      * @param value o valor a ser adicionado ao final da lista.
      */
-    public void append(Object value) {
-        // Implementação
+    public ListaEncadeada() {
+        this.cabeca = null;
+        this.tamanho = 0;
+    }
+    
+     public void append(Object value) {
+        No novoNo = new No(value);
+        
+        if (cabeca == null) {
+            cabeca = novoNo;
+        } else {
+            No atual = cabeca;
+            while (atual.getProx() != null) {
+                atual = atual.getProx();
+            }
+            atual.setProx(novoNo);
+        }
+        tamanho++;
     }
 
     /**
@@ -41,8 +59,28 @@ public class ListaEncadeada {
      * @param value o valor a ser inserido.
      * @throws IndexOutOfBoundsException se a posição fornecida for inválida.
      */
-    public void insertAt(int position, Object value) {
-        // Implementação
+     public void insertAt(int position, Object value) {
+        if (position < 0 || position > tamanho) {
+            throw new IndexOutOfBoundsException("Posição inválida: " + position);
+        }
+        
+        if (position == 0) {
+            No novoNo = new No(value);
+            novoNo.setProx(cabeca);
+            cabeca = novoNo;
+            tamanho++;
+            return;
+        }
+        
+        No anterior = cabeca;
+        for (int i = 0; i < position - 1; i++) {
+            anterior = anterior.getProx();
+        }
+        
+        No novoNo = new No(value);
+        novoNo.setProx(anterior.getProx());
+        anterior.setProx(novoNo);
+        tamanho++;
     }
 
     /**
@@ -51,7 +89,11 @@ public class ListaEncadeada {
      * @param list a lista cujos elementos serão adicionados.
      */
     public void addAll(ListaEncadeada list) {
-        // Implementação
+        No atual = list.cabeca;
+        while (atual != null) {
+            this.append(atual.getValor());
+            atual = atual.getProx();
+        }
     }
 
     /**
@@ -60,9 +102,26 @@ public class ListaEncadeada {
      * @param position a posição do elemento a ser removido.
      * @return {@code true} se a remoção foi bem-sucedida, {@code false} caso contrário.
      */
-    public boolean remove(int position) {
-        // Implementação
-        return false;
+     public boolean remove(int position) {
+        if (position < 0 || position >= tamanho || cabeca == null) {
+            return false;
+        }
+        
+        if (position == 0) {
+            cabeca = cabeca.getProx();
+            tamanho--;
+            return true;
+        }
+        
+        No anterior = cabeca;
+        for (int i = 0; i < position - 1; i++) {
+            anterior = anterior.getProx();
+        }
+        
+        No alvo = anterior.getProx();
+        anterior.setProx(alvo.getProx());
+        tamanho--;
+        return true;
     }
 
     /**
@@ -71,8 +130,9 @@ public class ListaEncadeada {
      * @return {@code true} se a lista foi limpa com sucesso, {@code false} caso contrário.
      */
     public boolean clear() {
-        // Implementação
-        return false;
+        cabeca = null;
+        tamanho = 0;
+        return true;
     }
 
     /**
@@ -83,8 +143,16 @@ public class ListaEncadeada {
      * @throws IndexOutOfBoundsException se a posição fornecida for inválida.
      */
     public Object get(int position) {
-        // Implementação
-        return null;
+        if (position < 0 || position >= tamanho) {
+            throw new IndexOutOfBoundsException("Posição inválida: " + position);
+        }
+        
+        No atual = cabeca;
+        for (int i = 0; i < position; i++) {
+            atual = atual.getProx();
+        }
+        
+        return atual.getValor();
     }
 
     /**
@@ -93,8 +161,7 @@ public class ListaEncadeada {
      * @return {@code true} se a lista não contiver elementos, {@code false} caso contrário.
      */
     public boolean isEmpty() {
-        // Implementação
-        return false;
+        return tamanho == 0;
     }
 
     /**
@@ -102,9 +169,8 @@ public class ListaEncadeada {
      *
      * @return o número de elementos na lista.
      */
-    public int size() {
-        // Implementação
-        return 0;
+     public int size() {
+        return tamanho;
     }
 
     /**
@@ -115,7 +181,17 @@ public class ListaEncadeada {
      * @return o índice do valor, ou {@code -1} se não encontrado.
      */
     public int indexOf(Object value) {
-        // Implementação
+        No atual = cabeca;
+        int index = 0;
+        
+        while (atual != null) {
+            if (atual.getValor() != null && atual.getValor().equals(value)) {
+                return index;
+            }
+            atual = atual.getProx();
+            index++;
+        }
+        
         return -1;
     }
 
@@ -126,7 +202,37 @@ public class ListaEncadeada {
      * @return {@code true} se o valor estiver na lista, {@code false} caso contrário.
      */
     public boolean contains(Object value) {
-        // Implementação
-        return false;
+        return indexOf(value) != -1;
     }
+
+    private class No {
+        private Object valor;
+        private No prox;
+        
+        public No() {
+            this.valor = null;
+            this.prox = null;
+        }
+        
+        public No(Object valor) {
+            this.valor = valor;
+            this.prox = null;
+        }
+        
+        public Object getValor() {
+            return valor;
+        }
+        
+        public No getProx() {
+            return prox;
+        }
+        
+        public void setValor(Object valor) {
+            this.valor = valor;
+        }
+        
+        public void setProx(No prox) {
+            this.prox = prox;
+        }
+    }   
 }
