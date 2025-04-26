@@ -8,5 +8,11 @@ Um par de fone de ouvido, a sua lista de reprodução favorita e pronto: você e
 
 
 # Equipe: <nome-da-equipe>
-1. <Nome de fulano>
-2. <Nome de fulana>
+1. Davi dos Anjos
+2. Dylan Coelho
+3. Eli Barreto
+4. Elias Barreto
+
+# Tabela de Code Review: 
+![image](https://github.com/user-attachments/assets/ecc81615-b273-430b-94d1-77e0ebfc6c47)
+
